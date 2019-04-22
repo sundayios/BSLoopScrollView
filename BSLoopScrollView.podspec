@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "BSLoopScrollView"
-  s.version      = "v0.0.1"
+  s.version      = "0.0.1"
   s.summary      = "A Loop ScrollView Of Pic or Add to Use BSLoopScrollView."
 
   # This description is used to generate tags and improve search results.
