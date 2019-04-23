@@ -1,3 +1,10 @@
+
+pod 'BSLoopScrollView'
+如未找到尝试
+1， 升级CocoaPods（使用的gem 源： https://gems.ruby-china.com/）
+sudo gem install cocoapods 
+
+
 BSLoopScrollView的详细使用
 如果有多个滚动视图
 //水平滚动
