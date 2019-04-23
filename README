@@ -1,0 +1,125 @@
+BSLoopScrollView的详细使用
+如果有多个滚动视图
+//水平滚动
+@property (nonatomic, strong) BSLoopScrollView picloopScrollView;
+//上下滚动
+@property (nonatomic, strong) BSLoopScrollView addLoopScrollView;
+@property (nonatomic, strong) NSArrary *picArray;
+@property (nonatomic, strong) NSArrary *addPicArray;
+
+- (NSArray *)picArray{
+  if(_picArray == nil){
+      _picArray = [[NSArray alloc] init];
+   }
+    return _picArray;
+}
+- (NSArray *)addPicArray{
+  if(_addPicArray == nil){
+      _addPicArray = [[NSArray alloc] init];
+   }
+    return _addPicArray;
+}
+
+- (void)requestData{
+  self.picArray = [@"imageName",@"",@""];
+  self.addPicArray = [@"imageName",@"",@""];
+  
+  [self.picloopScrooView reloadData];
+  [self.addLoopScrollView reloadData];
+}
+
+- (BSLoopScrollView *)picloopScrollView{
+    if (_picloopScrollView == nil) {
+        CGRect temp = CGRectMake(0,0,self.view.frame.size.width,200);
+        _picloopScrollView = [[BSLoopScrollView alloc] initWithFrame:temp];
+        _picloopScrollView.dataSource = self; //实现代理
+        _picloopScrollView.delegate = self;
+        _picloopScrollView.backgroundColor = [UIColor clearColor];
+        _picloopScrollView.autoScrollDuration = 3;  //设置隔3秒自动轮播  如果不设置 或设置为0 将不再滚动
+        _picloopScrollView.userInteractionEnabled = YES;  //????
+        _picloopScrollView.scrollDirection = horizt//看头文件 自己设置 滚动方向
+        _picloopScrollView.pageControlPosition = ;//设置指示点位置  不设置默认不显示指示点
+          /** 页面控制指示点颜色 */
+        _picloopScrollView.*pageIndicatorTintColor;
+        /** 页面控制当前指示点颜色 */
+        _picloopScrollView.currentPageIndicatorTintColor = ;
+        _picloopScrollView.userInteractionEnabled = YES;  //???
+        /** 内容视图是否响应触摸事件，默认为YES */
+        _picloopScrollView.shouldAllowTouch
+        //[_addLoopScrollView reloadData];//此方法可已在请求数据中调用
+        [self.sv addSubview:_picloopScrollView];
+    }
+    return _campusActiveView;
+}
+
+- (BSLoopScrollView *)addLoopScrollView{
+    if (_addLoopScrollView == nil) {
+        CGRect temp = CGRectMake(0,0,self.view.frame.size.width,200);
+        _addLoopScrollView = [[BSLoopScrollView alloc] initWithFrame:temp];
+        _addLoopScrollView.dataSource = self; //实现代理
+        _addLoopScrollView.delegate = self;
+        _addLoopScrollView.backgroundColor = [UIColor clearColor];
+        _addLoopScrollView.autoScrollDuration = 3;  //设置隔3秒自动轮播  如果不设置 或设置为0 将不再滚动
+        _addLoopScrollView.userInteractionEnabled = YES;  //????
+        _addLoopScrollView.scrollDirection = vertical//看头文件 自己设置 滚动方向
+   
+        /** 内容视图是否响应触摸事件，默认为YES */
+        _addLoopScrollView.shouldAllowTouch
+        //[_addLoopScrollView reloadData];//此方法可已在请求数据中调用
+        [self.sv addSubview:_addLoopScrollView];
+    }
+    return _campusActiveView;
+}
+
+代理方法
+#pragma mark- 轮播图的代理
+#pragma mark - BSLoopScrollViewDataSource
+- (NSUInteger)numberOfItemsInLoopScrollView:(BSLoopScrollView *)loopScrollView{
+    if (loopScrollView == self.picloopScrooView) {
+        return self.picArray.count;
+    }else if (loopScrollView == self.addLoopScrollView){
+        return self.addPicArray.count;
+    }
+    return 0;
+}
+- (UIView *)loopScrollView:(BSLoopScrollView *)loopScrollView contentViewAtIndex:(NSUInteger)index{
+    if (loopScrollView == self.picloopScrooView) {
+        NSDictionary *unit = self.carolArrDict[index];
+        
+        //1可以返回自定义视图
+        UIView *subView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 116)];
+        subView.userInteractionEnabled = YES;
+        subView.backgroundColor = [UIColor clearColor];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12.5, 0, screenWidth - 25, 116)];
+        imageView.layer.cornerRadius = 5;
+        imageView.layer.masksToBounds = YES;
+        [imageView sd_setImageWithURL:[NSURL URLWithString:unit[@"image"]] placeholderImage:[UIImage imageNamed:@"cbx_placeHClassimage_test"]];
+        [subView addSubview:imageView];
+        return subView;
+        
+        //2也可以之间返回UIImageView
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12.5, 0, screenWidth - 25, 116)];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:unit[@"image"]] placeholderImage:[UIImage imageNamed:@"cbx_placeHClassimage_test"]];
+        return imageView;
+    }else if (loopScrollView == self.addLoopScrollView){
+        //返回自定义视图 实现字符串的数组的元素  向上轮播
+          UILable *titleLabel = [[UILable alloc] initWithFrame:CGRectMake(0,0, ,);
+          titleLable.textColor = [UIColor whiteColor];
+          titleLable.font = ;
+          titleLable.text = self.addArray[index];
+          return titlleLabel;
+          
+    }
+    return nil;
+}
+#pragma mark - BSLoopScrollViewDelegate
+- (void)loopScrollView:(BSLoopScrollView *)loopScrollView didTouchContentView:(UIView *)contentView atIndex:(NSUInteger)index{
+    
+    if (loopScrollView == self.picloopScrooView) {
+       //do something
+    }else if (loopScrollView == self.addLoopScrollView){
+       
+        //do something
+    }
+}
+
